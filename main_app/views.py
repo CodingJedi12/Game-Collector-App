@@ -1,7 +1,7 @@
 from telnetlib import GA
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from main_app.models import Game
 
@@ -21,6 +21,16 @@ def games_detail(request, game_id):
     return render(request, 'games/detail.html', {'game': game})
 
 class GameCreate(CreateView):
+    model = Game
+    fields = '__all__'
+    success_url = '/games/'
+
+class GameUpdate(UpdateView):
+    model = Game
+    fields = ['genre', 'description', 'esrb_rating']
+    success_url = '/games/'
+
+class GameDelete(DeleteView):
     model = Game
     fields = '__all__'
     success_url = '/games/'
