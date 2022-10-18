@@ -1,5 +1,7 @@
+from telnetlib import GA
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 
 from main_app.models import Game
 
@@ -17,3 +19,8 @@ def games_index(request):
 def games_detail(request, game_id):
     game = Game.objects.get(id=game_id)
     return render(request, 'games/detail.html', {'game': game})
+
+class GameCreate(CreateView):
+    model = Game
+    fields = '__all__'
+    success_url = '/games/'

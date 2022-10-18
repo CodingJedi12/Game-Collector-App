@@ -7,4 +7,5 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('games/', views.games_index, name='index' ),
     path('games/<int:game_id>', views.games_detail, name='detail'),
+    path('games/create/', views.GameCreate.as_view(), name='games_create')
 ]
