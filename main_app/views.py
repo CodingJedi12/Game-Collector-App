@@ -1,7 +1,8 @@
 from telnetlib import GA
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .forms import PlayLog
 
 from main_app.models import Game
 
@@ -19,6 +20,14 @@ def games_index(request):
 def games_detail(request, game_id):
     game = Game.objects.get(id=game_id)
     return render(request, 'games/detail.html', {'game': game})
+
+def played_on(request, game_id):
+    form = PlayLog(request.POST)
+    if form.is_valid():
+        new_played_on = form.save(commit=False)
+        new_played_on.game_id = game_id
+        new_played_on.save()
+    return redirect('detail', game_id=game_id)
 
 class GameCreate(CreateView):
     model = Game

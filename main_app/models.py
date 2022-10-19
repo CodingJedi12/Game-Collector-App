@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Game(models.Model):
     title = models.CharField(max_length=100)
     genre = models.CharField(max_length=30)
@@ -10,3 +11,13 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
+
+class PlayedOn(models.Model):
+    # .Field() creates a form to fill out
+    date = models.DateField('Date Played')
+
+    # Makes a foreign key
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.date
