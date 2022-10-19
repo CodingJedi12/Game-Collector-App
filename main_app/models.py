@@ -15,6 +15,7 @@ class Game(models.Model):
 class PlayedOn(models.Model):
     # .Field() creates a form to fill out
     date = models.DateField('Date Played')
+    session_length = models.IntegerField(default=0)
 
     # Makes a foreign key
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

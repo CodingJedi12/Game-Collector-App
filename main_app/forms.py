@@ -4,4 +4,4 @@ from .models import PlayedOn
 class PlayLog(ModelForm):
     class Meta:
         model = PlayedOn
-        fields = ['date']
+        fields = ['date', 'session_length']

@@ -19,14 +19,18 @@ def games_index(request):
 
 def games_detail(request, game_id):
     game = Game.objects.get(id=game_id)
-    return render(request, 'games/detail.html', {'game': game})
+    play_log = PlayLog()
+    return render(request, 'games/detail.html', {
+        'game': game,
+        'play_log': play_log
+    })
 
 def played_on(request, game_id):
     form = PlayLog(request.POST)
     if form.is_valid():
-        new_played_on = form.save(commit=False)
-        new_played_on.game_id = game_id
-        new_played_on.save()
+        new_log = form.save(commit=False)
+        new_log.game_id = game_id
+        new_log.save()
     return redirect('detail', game_id=game_id)
 
 class GameCreate(CreateView):
