@@ -41,6 +41,50 @@
     </div>
 </div>
 
+<hr />
+<div class="row">
+
+    <div class="col s6">
+        <h3>{{ game.title }}'s Playable Systems</h3>
+        {% if game.systems.count %} {% for system in game.systems.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    {{ system.name }}
+                </span>
+            </div>
+        </div>
+        {% endfor %} {% else %}
+        <h5>No Playable Systems :(</h5>
+        {% endif %}
+    </div>
+
+
+    <!-- Available systems will come after this line -->
+    <div class="col s6">
+        <h3>Available Systems</h3>
+        {% if systems.count %}
+        {% for system in systems.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    {{ system.name }}
+                </span>
+            </div>
+            <div class="card-action">
+                <form action="{% url 'assoc_system' game.id system.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Add</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5>{{game.title}} Already has All Systems Playable</h5>
+        {% endif %}
+    </div>
+</div>
+
 <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {
